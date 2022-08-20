@@ -18,10 +18,12 @@ contract Lockbox2 {
     }
 
     function stage1() external {
+        // message with less than 500 bytes
         require(msg.data.length < 500);
     }
 
     function stage2(uint256[4] calldata arr) external {
+        // pass in an array of 4 prime numbers?
         for (uint256 i = 0; i < arr.length; ++i) {
             require(arr[i] >= 1);
             for (uint256 j = 2; j < arr[i]; ++j) {
@@ -31,12 +33,14 @@ contract Lockbox2 {
     }
 
     function stage3(uint256 a, uint256 b, uint256 c) external {
+        // call an address that returns bool & bytes
         assembly { mstore(a, b) }
         (bool success, bytes memory data) = address(uint160(a + b)).staticcall("");
         require(success && data.length == c);
     }
 
     function stage4(bytes memory a, bytes memory b) external {
+        // deploy contract byte code where the caller (tx.origin) is...
         address addr;
         assembly { addr := create(0, add(a, 0x20), mload(a)) }
         (bool success, ) = addr.staticcall(b);
@@ -44,6 +48,7 @@ contract Lockbox2 {
     }
 
     function stage5() external {
+        // if i call solve(), msg.sender == address(this) no?
         if (msg.sender != address(this)) {
             (bool success,) = address(this).call(abi.encodePacked(this.solve.selector, msg.data[4:]));
             require(!success);

@@ -2,6 +2,7 @@
 src = 'src'
 out = 'out'
 libs = ['lib']
+optimizer_runs = 1000
 
 [rpc_endpoints]
 paradigm = "${FOUNDRY_paradigm}"

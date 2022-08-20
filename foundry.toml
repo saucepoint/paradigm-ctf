@@ -3,5 +3,3 @@ src = 'src'
 out = 'out'
 libs = ['lib']
 
-[rpc_endpoints]
-paradigm = "http://34.66.135.107:8545/edb7901c-5044-42c5-bbad-aca4809eaac7"
